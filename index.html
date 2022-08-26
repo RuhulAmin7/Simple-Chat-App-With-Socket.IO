@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
+</head>
+
+<body class="bg-dark">
+    <div class="user-name-form mt-5" id="name-area">
+        <form id="name-form" class="input-group ">
+            <input type="text" class="form-control bg-dark text-secondary" placeholder="Input Your name">
+            <input type="submit" value="Join" class="btn btn-secondary">
+        </form>
+    </div>
+    <div hidden id="room-area">
+        <header class="bg-dark ">
+            <h1 class="text-center text-secondary">Welcome to the Chat Room</h1>
+        </header>
+
+        <main class="bg-dark text-secondary">
+            <aside class="left-bar">
+                <div class="group-chat">
+                    <h4 class="p-2">Group chat</h4>
+                    <ul id="group-chat-users-list">
+                        <li>How</li>
+                        <li>How</li>
+                        <li>How</li>
+                    </ul>
+                </div>
+
+                <div class="active-users">
+                    <h4 class="p-2">Active users</h4>
+                    <ul id="active-users-list">
+                    </ul>
+                </div>
+            </aside>
+            <div hidden id="chat_box" class="right-bar container mt-5 rounded">
+                <h5 id="chat_box_title" class="bg-dark rounded p-1">Chat box</h5>
+                <div class="display-chat">
+                    <ul id="display-chat-ul"></ul>
+                </div>
+                <form id="chat-input-form" class="input-group">
+                    <input type="text" class="form-control bg-dark text-secondary">
+                    <input type="text" hidden>
+                    <button type="submit" id="button" class="btn btn-secondary">
+                        Send
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
