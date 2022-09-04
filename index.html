@@ -25,7 +25,37 @@
         <main class="bg-dark text-secondary">
             <aside class="left-bar">
                 <div class="group-chat">
-                    <h4 class="p-2">Group chat</h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="p-2">Group chat</h4>
+                        <!-- Button trigger modal -->
+                        <button id="create-btn" type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            +
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add a new group</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <input id="room-name-input" class="form-control" type="text" placeholder="Group name">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button id="create-room-btn"
+                                         type="button" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <ul id="group-chat-users-list">
                         <li>How</li>
                         <li>How</li>

@@ -11,6 +11,9 @@ const roomArea = document.getElementById('room-area');
 const activeUserUl = document.getElementById('active-users-list');
 const chatBox = document.getElementById('chat_box');
 const chatBoxTitle = document.getElementById('chat_box_title');
+const createBtn = document.getElementById('create-btn');
+const roomNameInputEl = document.getElementById('room-name-input');
+const createRoomBtn = document.getElementById('create-room-btn');
 
 // global variables
 let activeUsers;
@@ -21,6 +24,16 @@ function openChatBox(user) {
   chatBoxTitle.textContent = user.id === socket.id ? 'You' : user.name;
   chatInputForm[1].value = user.id;
 }
+
+// create room functionality
+createRoomBtn.addEventListener('click', (e) => {
+  const roomName = roomNameInputEl.value;
+  if (roomName) {
+    socket.emit('createRoom', roomName, () => {
+      console.log('Room created');
+    });
+  }
+});
 
 // name form  handler
 nameForm.addEventListener('submit', function (e) {
@@ -46,7 +59,7 @@ socket.on('get_active_users', function (users) {
     const li = document.createElement('li');
     li.addEventListener('click', () => {
       openChatBox(user);
-      displayChatUl.innerHTML = ''
+      displayChatUl.innerHTML = '';
     });
     li.textContent = user.id === socket.id ? 'You' : user.name;
     li.dataset.id = user.id;
@@ -62,12 +75,11 @@ chatInputForm.addEventListener('submit', () => {
     socket.emit('sendMessage', { message, id }, () => {
       const li = document.createElement('li');
       li.textContent = 'You: ' + message;
-      li.style.textAlign= 'right';
-      li.style.color= 'green';
-      li.style.listStyle= 'none';
-      // li.style.backgroundColor = '#ddd9';
+      li.style.textAlign = 'right';
+      li.style.color = 'green';
+      li.style.listStyle = 'none';
       displayChatUl.appendChild(li);
-      chatInputForm[0].value = ''
+      chatInputForm[0].value = '';
     });
   }
 });
@@ -79,7 +91,12 @@ socket.on('rcv_message', (data, sender_Id) => {
   const sender = activeUsers.find((usr) => usr.id === sender_Id);
   openChatBox(sender);
   const li = document.createElement('li');
-  li.style.listStyle= 'none';
+  li.style.listStyle = 'none';
   li.textContent = sender.name + ': ' + data.message;
   displayChatUl.appendChild(li);
-});
+}); 
+
+// get public rooms
+socket.on('getPublicRooms',(publicRooms)=>{
+  console.log(publicRooms)
+})
