@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+
     <title>Document</title>
 </head>
 
@@ -18,8 +19,8 @@
         </form>
     </div>
     <div hidden id="room-area">
-        <header class="bg-dark ">
-            <h1 class="text-center text-secondary">Welcome to the Chat Room</h1>
+        <header class="bg-secondary ">
+            <h1 class="text-center text-dark">Welcome to the Chat Room</h1>
         </header>
 
         <main class="bg-dark text-secondary">
@@ -44,23 +45,25 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                       <input id="room-name-input" class="form-control" type="text" placeholder="Group name">
+                                        <input id="room-name-input" class="form-control" type="text"
+                                            placeholder="Group name">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button id="create-room-btn"
-                                         type="button" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
+                                        <button id="create-room-btn" type="button" class="btn btn-primary"
+                                            data-bs-dismiss="modal">Create</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <ul id="group-chat-users-list">
-                        <li>How</li>
-                        <li>How</li>
-                        <li>How</li>
-                    </ul>
+                    <div id="public_rooms">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+
+                        </div>
+                        
+                    </div>
                 </div>
 
                 <div class="active-users">
@@ -76,7 +79,7 @@
                 </div>
                 <form id="chat-input-form" class="input-group">
                     <input type="text" class="form-control bg-dark text-secondary">
-                    <input type="text" hidden>
+                    <input type="hidden">
                     <button type="submit" id="button" class="btn btn-secondary">
                         Send
                     </button>
@@ -85,9 +88,9 @@
         </main>
     </div>
 
-
+    <script src="https://kit.fontawesome.com/a7c3cc1eb4.js" crossorigin="anonymous"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="/js/bootstrap.bundle.min.js"></script> -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/index.js"></script>
 </body>

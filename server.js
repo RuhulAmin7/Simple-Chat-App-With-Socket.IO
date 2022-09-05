@@ -1,3 +1,4 @@
+const { log } = require('console');
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -29,6 +30,14 @@ io.on('connection', function (socket) {
     return activeUsersArray;
   };
 
+  // user  disconnection
+  socket.on('disconnect', async (data) => {
+    const activeUsers = await getOnlineUsers();
+    io.emit('get_active_users', activeUsers);
+    const publicRooms = await getPublicRooms();
+    io.emit('getPublicRooms', publicRooms);
+  });
+
   // get public rooms
   async function getPublicRooms() {
     const rooms = await io.sockets.adapter.rooms;
@@ -51,6 +60,7 @@ io.on('connection', function (socket) {
             id: userSocket.id,
             name: userSocket.name,
           });
+
           publicRooms.push({
             id: 'a' + roomId + Date.now(),
             roomName,
@@ -61,6 +71,7 @@ io.on('connection', function (socket) {
         }
       }
     }
+    console.log(publicRooms);
     return publicRooms;
   }
 
@@ -70,30 +81,47 @@ io.on('connection', function (socket) {
     cb();
     const activeUsers = await getOnlineUsers();
     io.emit('get_active_users', activeUsers);
+    const publicRooms = await getPublicRooms();
+    io.emit('getPublicRooms', publicRooms);
   });
 
   // receive a private message
   socket.on('sendMessage', (data, cb) => {
-    const message = data.message;
     const id = data.id;
-    // send message to user
-    io.to(id).emit('rcv_message', data, socket.id);
+    const message = data.message;
+    const isRoom = data.isRoom === 'false' ? false : data.isRoom;
+    data.isRoom = isRoom;
+    if (isRoom) {
+      socket.to(id).emit('rcv_message', data, socket.id);
+    } else {
+      // send message to user
+      io.to(id).emit('rcv_message', data, socket.id);
+      cb();
+    }
+  });
+
+  // create a public room
+  socket.on('createRoom', async (roomName, callback) => {
+    socket.join(roomName);
+    const publicRooms = await getPublicRooms();
+    io.emit('getPublicRooms', publicRooms);
+    callback();
+  });
+
+  // join a room
+  socket.on('joinRoom', async (roomName, cb) => {
+    socket.join(roomName);
+    const publicRooms = await getPublicRooms();
+    io.emit('getPublicRooms', publicRooms);
     cb();
   });
 
-  // create new room
-  socket.on('createRoom', async (roomName, callback) => {
-    socket.join(roomName);
-    callback();
+  // leave from room
+  socket.on('leaveRoom', async (roomName, cb) => {
+    socket.leave(roomName);
     const publicRooms = await getPublicRooms();
-    io.emit('getPublicRooms', publicRooms)
- 
-  });
-
-  // user  disconnection
-  socket.on('disconnect', async (data) => {
-    const activeUsers = await getOnlineUsers();
-    io.emit('get_active_users', activeUsers);
+    io.emit('getPublicRooms', publicRooms);
+    cb();
   });
 });
 

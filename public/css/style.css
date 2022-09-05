@@ -17,7 +17,7 @@ aside {
   height: 45%;
   margin-bottom: 30px;
 }
-#group-chat-users-list {
+#public_rooms {
   height: 90%;
   overflow: auto;
   overflow-x: hidden;
